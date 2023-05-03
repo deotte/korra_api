@@ -7,7 +7,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-	var docRef = firebaseDb.collection('characters').doc(req.params.id);
+	var randomId = 0;
+
+	if (req.params.id === 'random') {
+		randomId = Math.floor(Math.random() * 100) + 1;
+		var docRef = firebaseDb.collection('characters').doc(randomId.toString());
+	} else {
+		var docRef = firebaseDb.collection('characters').doc(req.params.id);
+	}
+
 
 	docRef.get().then((doc) => {
 		if (doc.exists) {
@@ -15,7 +23,7 @@ router.get('/:id', function(req, res, next) {
 			return;
 		}
 
-		res.send('Hello');
+		res.send('Character not found with ID ' + req.params.id);
 	});
 });
 
