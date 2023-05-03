@@ -1,9 +1,11 @@
+var firebase = require("firebase/app");
+require("firebase/firestore");
 
 // Initialize dot env for .env file
 var dotenv = require('dotenv');
 dotenv.config();
 
-let firebaseConfig = {
+var firebaseConfig = {
 	apiKey: process.env.FIREBASE_API_KEY,
 	authDomain: process.env.FIREBASE_AUTH_DOMAIN,
 	projectId: process.env.FIREBASE_PROJECT_ID,
@@ -12,7 +14,7 @@ let firebaseConfig = {
 	appId: process.env.FIREBASE_APP_ID
 };
 
-// const firebaseApp = initializeApp(firebaseConfig);
-// const database = getFirestore(firebaseApp);
+var firebaseApp = firebase.initializeApp(firebaseConfig);
+var database = firebase.firestore();
 
-// module.exports = database;
+module.exports = database;

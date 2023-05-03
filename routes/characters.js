@@ -6,9 +6,17 @@ router.get('/', function(req, res, next) {
 	res.send('Hello');
 });
 
-router.get('/:id', async function(req, res, next) {
-	console.log(req.params.id);
-	res.send('Hello');
+router.get('/:id', function(req, res, next) {
+	var docRef = firebaseDb.collection('characters').doc(req.params.id);
+
+	docRef.get().then((doc) => {
+		if (doc.exists) {
+			res.send(doc.data());
+			return;
+		}
+
+		res.send('Hello');
+	});
 });
 
 module.exports = router;
