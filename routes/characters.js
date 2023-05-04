@@ -4,7 +4,39 @@ const firebaseDb = require('../firebase.js');
 const characterCount = 21; // Count length of CSV file
 
 router.get('/', function(req, res, next) {
-	res.send('Hello');
+	const perPageQuery = req.query.perPage || 50;
+	const pageNumber = req.query.page || 1;
+	let startAt = 1;
+
+	if (pageNumber > 1) {
+		startAt = ((pageNumber - 1) * perPageQuery) + 1;
+	}
+
+	firebaseDb.collection('characters')
+		.orderBy("id")
+		.limit(perPageQuery)
+		.startAt(startAt)
+		.get()
+		.then((querySnapshot) => {
+			if (querySnapshot.empty) {
+				let errorMessage = 'No characters found - your requested page number + per page might be over the amount of characters in the database.'
+				console.log(errorMessage);
+				res.send(errorMessage);
+				return;
+			}
+
+			let characters = [];
+			querySnapshot.forEach((doc) => {
+				characters.push(doc.data());
+			});
+
+			res.send(characters);
+		})
+		.catch((error) => {
+			let errorMessage = 'Characters not retrieved in database: ' + JSON.stringify(error);
+			console.log(errorMessage);
+			res.status(500).send(errorMessage);
+		})
 });
 
 router.get('/:id', function(req, res, next) {
@@ -33,7 +65,7 @@ router.get('/:id', function(req, res, next) {
 		.catch((error) => {
 			let errorMessage = "Error getting character with ID " + characterId + ": " + JSON.stringify(error);
 			console.log(errorMessage);
-			res.send(errorMessage);
+			res.status(500).send(errorMessage);
     	});
 });
 
