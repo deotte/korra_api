@@ -17,8 +17,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/characters', charactersRouter);
 
-var characterDbModule = require('./data/characterDbModule.js');
+var characterCreator = require('./data/characterCreator.js');
 
-characterDbModule.createOrUpdateCharactersFromFile();
+// characterCreator.createOrUpdateCharactersFromFile();
 
 module.exports = app;

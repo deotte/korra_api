@@ -3,7 +3,6 @@ const CsvReadableStream = require('csv-reader');
 const firebaseDb = require('../firebase.js');
 
 let inputStream = fs.createReadStream('./data/characters.csv', 'utf-8');
-let characterCount = 0;
 
 function createOrUpdateCharacter(row) {
 	firebaseDb.collection('characters')
@@ -18,6 +17,9 @@ function createOrUpdateCharacter(row) {
 
 			let queryDocSnapshot = querySnapshot.docs[0];
 			updateCharacter(queryDocSnapshot, row);
+		})
+		.catch((error) => {
+			console.log("Error getting character with ID " + row["ID"] + ": ", error);
 		});
 }
 
@@ -34,10 +36,10 @@ function createCharacter(row) {
 		nationality: row["Nationality"].split('|'),
 		image_url: row["ImageUrl"]
 	}).then((docRef) => {
-    	console.log("Character " + row["ID"] + " added in DB. Document ID: ", docRef.id);
+		console.log("Character " + row["ID"] + " added in DB. Document ID: ", docRef.id);
 	})
 	.catch((error) => {
-    	console.error("Error adding character " + row["ID"] + ": ", error);
+		console.error("Error adding character " + row["ID"] + ": ", error);
 	});
 }
 
@@ -54,7 +56,7 @@ function updateCharacter(queryDocSnapshot, row) {
 		image_url: row["ImageUrl"]
 	})
 	.then(() => {
-    	console.log("Character " + row["ID"] + " successfully updated");
+		console.log("Character " + row["ID"] + " successfully updated");
 	})
 	.catch((error) => {
 		// The document probably doesn't exist.
@@ -63,7 +65,6 @@ function updateCharacter(queryDocSnapshot, row) {
 }
 
 module.exports = {
-	characterCount: characterCount, // Use this value for api/characters/random
 	createOrUpdateCharactersFromFile: function() {
 		inputStream
 			.pipe(new CsvReadableStream({
@@ -74,7 +75,6 @@ module.exports = {
 			}))
 			.on('data', function (row) {
 				createOrUpdateCharacter(row);
-				characterCount++;
 			})
 			.on('end', function () {
 				console.log('All characters in file processed');
