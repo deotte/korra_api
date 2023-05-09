@@ -1,8 +1,5 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+.ac .ac-trigger {
+	font-weight: normal;
+	font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+	font-size: 16px;
 }

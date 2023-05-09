@@ -4,22 +4,35 @@ const firebaseDb = require('../firebase.js');
 const characterCount = 21; // Count length of CSV file
 
 router.get('/', function(req, res, next) {
+	let startAt = 1;
+
 	const perPageQuery = req.query.perPage || 50;
 	const pageNumber = req.query.page || 1;
-	let startAt = 1;
+	const nationalityQuery = req.query.nationality?.split(',');
+	const ethnicityQuery = req.query.ethnicity?.split(',');
 
 	if (pageNumber > 1) {
 		startAt = ((pageNumber - 1) * perPageQuery) + 1;
 	}
 
-	firebaseDb.collection('characters')
+	let query = firebaseDb.collection('characters');
+
+	if (nationalityQuery !== undefined && ethnicityQuery === undefined) {
+		query = query.where("nationality", "array-contains-any", nationalityQuery);
+	}
+
+	if (ethnicityQuery !== undefined && nationalityQuery === undefined) {
+		query = query.where('ethnicity', 'array-contains-any', ethnicityQuery);
+	}
+ 
+	query
 		.orderBy("id")
 		.limit(perPageQuery)
 		.startAt(startAt)
 		.get()
 		.then((querySnapshot) => {
 			if (querySnapshot.empty) {
-				let errorMessage = 'No characters found - your requested page number + per page might be over the amount of characters in the database.'
+				let errorMessage = 'No characters found - your requested pageNumber + pageNumber could be too high, or nationality/ethnicity filter could be incorrect.'
 				console.log(errorMessage);
 				res.send(errorMessage);
 				return;

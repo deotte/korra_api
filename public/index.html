@@ -1,13 +1,296 @@
 <html>
 
 <head>
-  <title>Express</title>
+  <title>Legend of Korra API</title>
+	<link rel="stylesheet" href="/stylesheets/prism.css">
+	<link rel="stylesheet" href="https://unpkg.com/accordion-js@3.3.4/dist/accordion.min.css">
   <link rel="stylesheet" href="/stylesheets/style.css">
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script>
+		tailwind.config = {
+			theme: {
+				extend: {
+					colors: {
+						clifford: '#da373d'
+					}
+				}
+			}
+		}
+	</script>
+	<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+	<link rel="manifest" href="/images/site.webmanifest">
 </head>
 
 <body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
+	<section class="header container mt-8 mx-auto flex items-center justify-between w-3/4 bg-[#D6EAE9] px-4">
+		<div class="content">
+			<h1 class="text-3xl">Legend of Korra API</h1>
+			<h3 class="text-lg mt-4">An open source REST API inspired by the Legend of Korra</h3>
+			<p class="mt-6">
+				Check out the project on 
+				<a class="text-blue-600 decoration-blue-600 underline underline-offset-4" href="https://github.com/deotte/korra_api">
+					Github
+				</a>
+			</p>
+		</div>
+		<div class="image">
+			<!-- Image created by xrenascent on Deviantart: https://www.deviantart.com/xrenascent/art/Team-Avatar-Korra-477419627 -->
+			<img class="w-96" src="images/background.jpg">
+		</div>
+	</section>
+	<section class="documentation container mx-auto mt-6 w-3/4 mb-8">
+		<div class="header">
+			<h2 class="text-2xl">Available Routes</h2>
+		</div>
+		<div class="ac codeblock mt-6 shadow-inner rounded p-4">
+			<h2 class="ac-header">
+				<button type="button" class="ac-trigger">GET /api/characters/:id</button>
+			</h2>
+				<div class="ac-panel">
+					<h3 class="mb-4 text-lg mt-4">Route</h3>
+						<pre><code class="language-bash">GET /api/characters/:id</code></pre>
+					<h3 class="mb-4 mt-4 text-lg">Description</h3>
+						<p>Returns a specific character by ID</p>
+					<h3 class="mb-4 mt-4 text-lg">Example Link</h3>
+						<a href="/api/characters" target="_blank" class="text-blue-500">/api/characters/1</a>
+					<h3 class="mb-4 mt-4 text-lg">Example Response</h3>
+						<pre>
+							<code class="language-json">
+HTTP 200 OK
+Content-Type: application/json
+{
+	"type":"Human",
+	"gender":"Woman",
+	"image_url":"https://static.wikia.nocookie.net/avatar/images/3/31/Korra_smiling.png/revision/latest?cb=20200907192928",
+	"first_episode":"Welcome to Republic City",
+	"nationality":["Wolf Cove","Southern Water Tribe"],
+	"id":1,
+	"eye_color":
+	"Cyan",
+	"name":"Korra",
+	"ethnicity":["Water Tribe"],
+	"birthdate":"153 AG"
+}
+							</code>
+						</pre>
+				</div>
+		</div>
+		<div class="ac codeblock mt-6 shadow-inner rounded p-4">
+			<h2 class="ac-header">
+				<button type="button" class="ac-trigger">GET /api/characters/random</button>
+			</h2>
+			<div class="ac-panel">
+				<h3 class="mb-4 text-lg mt-4">Route</h3>
+					<pre><code class="language-bash">GET /api/characters/random</code></pre>
+				<h3 class="mb-4 mt-4 text-lg">Description</h3>
+					<p>Returns a random character</p>
+				<h3 class="mb-4 mt-4 text-lg">Example Link</h3>
+					<a href="/api/characters" target="_blank" class="text-blue-500">/api/characters/random</a>
+				<h3 class="mb-4 mt-4 text-lg">Example Response</h3>
+				<pre>
+					<code class="language-json">
+HTTP 200 OK
+Content-Type: application/json
+{
+	"type":"Human",
+	"gender":"Woman",
+	"image_url":"https://static.wikia.nocookie.net/avatar/images/3/31/Korra_smiling.png/revision/latest?cb=20200907192928",
+	"first_episode":"Welcome to Republic City",
+	"nationality":["Wolf Cove","Southern Water Tribe"],
+	"id":1,
+	"eye_color":
+	"Cyan",
+	"name":"Korra",
+	"ethnicity":["Water Tribe"],
+	"birthdate":"153 AG"
+}
+						</code>
+				</pre>
+			</div>
+		</div>
+		<div class="ac codeblock mt-6 shadow-inner rounded p-4">
+			<h2 class="ac-header">
+				<button type="button" class="ac-trigger">GET /api/characters</button>
+			</h2>
+			<div class="ac-panel">
+				<h3 class="mb-4 text-lg mt-4">Route</h3>
+				<pre><code class="language-bash">GET /api/characters/</code></pre>
+				<h3 class="mb-4 mt-4 text-lg">Description</h3>
+				<p>Returns a list of characters. Defaults to 50 per page.</p>
+				<h3 class="mb-4 mt-4 text-lg">Example Link</h3>
+				<a href="/api/characters" target="_blank" class="text-blue-500">/api/characters</a>
+				<h3 class="mb-4 mt-4 text-lg">Example Response</h3>
+				<pre>
+							<code class="language-json">
+HTTP 200 OK
+Content-Type: application/json
+[
+	{
+		"name":"Korra",
+		"eye_color":"Cyan",
+		"nationality":["Wolf Cove","Southern Water Tribe"],
+		"gender":"Woman",
+		"image_url":"https://static.wikia.nocookie.net/avatar/images/3/31/Korra_smiling.png/revision/latest?cb=20200907192928",
+		"ethnicity":["Water Tribe"],
+		"birthdate":"153 AG",
+		"id":1,
+		"first_episode":
+		"Welcome to Republic City",
+		"type":"Human"
+	},
+	{
+		"first_episode":"A Leaf in the Wind",
+		"id":2,
+		"eye_color":"Tangerine",
+		"ethnicity": ["Fire Nation","Earth Kingdom"],
+		"gender":"Man",
+		"image_url":"https://static.wikia.nocookie.net/avatar/images/a/a6/Mako.png/revision/latest?cb=20150408124557",
+		"nationality":["Republic City","United Republic"],
+		"type":"Human",
+		"birthdate":"152 AG",
+		"name":"Mako"
+	}
+]
+						</code>
+					</pre>
+				</div>
+		</div>
+		<div class="ac codeblock mt-6 shadow-inner rounded p-4">
+			<h2 class="ac-header">
+				<button type="button" class="ac-trigger">GET /api/characters?perPage=number&page=number</button>
+			</h2>
+			<div class="ac-panel">
+				<h3 class="mb-4 text-lg mt-4">Route</h3>
+				<pre><code class="language-bash">GET /api/characters?perPage=number&page=number</code></pre>
+				<h3 class="mb-4 mt-4 text-lg">Description</h3>
+				<p>Returns a paginated list of characters by page and pageNumber. <b>No start/end indexing needed.</b></p>
+				<p class="mt-2">The endpoint automatically determines the correct starting/ending point for index based off of <b>perPage</b> and <b>pageNumber</b>:</p>
+				<pre>
+					<code class="language-js">
+if (pageNumber > 1) {
+startAt = ((pageNumber - 1) * perPageQuery) + 1;
+}
+					</code>
+				</pre>
+				<h3 class="mb-4 mt-4 text-lg">Example Link</h3>
+				<a href="/api/characters" target="_blank" class="text-blue-500">/api/characters</a>
+				<h3 class="mb-4 mt-4 text-lg">Example Response</h3>
+				<pre>
+									<code class="language-json">
+HTTP 200 OK
+Content-Type: application/json
+[
+{
+	"name":"Korra",
+	"eye_color":"Cyan",
+	"nationality":["Wolf Cove","Southern Water Tribe"],
+	"gender":"Woman",
+	"image_url":"https://static.wikia.nocookie.net/avatar/images/3/31/Korra_smiling.png/revision/latest?cb=20200907192928",
+	"ethnicity":["Water Tribe"],
+	"birthdate":"153 AG",
+	"id":1,
+	"first_episode":
+	"Welcome to Republic City",
+	"type":"Human"
+},
+{
+	"first_episode":"A Leaf in the Wind",
+	"id":2,
+	"eye_color":"Tangerine",
+	"ethnicity": ["Fire Nation","Earth Kingdom"],
+	"gender":"Man",
+	"image_url":"https://static.wikia.nocookie.net/avatar/images/a/a6/Mako.png/revision/latest?cb=20150408124557",
+	"nationality":["Republic City","United Republic"],
+	"type":"Human",
+	"birthdate":"152 AG",
+	"name":"Mako"
+}
+]
+								</code>
+							</pre>
+			</div>
+		</div>
+		<div class="ac codeblock mt-6 shadow-inner rounded p-4">
+			<h2 class="ac-header">
+				<button type="button" class="ac-trigger">GET /api/characters?nationality=value,value</button>
+			</h2>
+			<div class="ac-panel">
+				<h3 class="mb-4 text-lg mt-4">Route</h3>
+				<pre><code class="language-bash">GET /api/characters?nationality=value,value</code></pre>
+				<h3 class="mb-4 mt-4 text-lg">Description</h3>
+				<p>Returns a list of characters who match the given nationality or nationalities, separated by commas.</b></p>
+				<p class="font-bold mt-2">Overrides ethnicity filter if given.</p>
+				<h3 class="mb-4 mt-4 text-lg">Example Link</h3>
+				<a href="/api/characters?nationality=Republic City,United Republic" target="_blank" class="text-blue-500">
+					/api/characters?nationality=Republic City,United Republic
+				</a>
+				<h3 class="mb-4 mt-4 text-lg">Example Response</h3>
+				<pre>
+									<code class="language-json">
+HTTP 200 OK
+Content-Type: application/json
+[
+{
+	"first_episode":"A Leaf in the Wind",
+	"id":2,
+	"eye_color":"Tangerine",
+	"ethnicity": ["Fire Nation","Earth Kingdom"],
+	"gender":"Man",
+	"image_url":"https://static.wikia.nocookie.net/avatar/images/a/a6/Mako.png/revision/latest?cb=20150408124557",
+	"nationality":["Republic City","United Republic"],
+	"type":"Human",
+	"birthdate":"152 AG",
+	"name":"Mako"
+}
+]
+					</code>
+				</pre>
+			</div>
+		</div>
+		<div class="ac codeblock mt-6 shadow-inner rounded p-4">
+			<h2 class="ac-header">
+				<button type="button" class="ac-trigger">GET /api/characters?ethnicity=value,value</button>
+			</h2>
+			<div class="ac-panel">
+				<h3 class="mb-4 text-lg mt-4">Route</h3>
+				<pre><code class="language-bash">GET /api/characters?ethnicity=value,value</code></pre>
+				<h3 class="mb-4 mt-4 text-lg">Description</h3>
+				<p>Returns a list of characters who match the given ethnicity or ethnicities, separated by commas.</b></p>
+				<p class="font-bold mt-2">Overrides nationality filter if given.</p>
+				<h3 class="mb-4 mt-4 text-lg">Example Link</h3>
+				<a href="/api/characters?ethnicity=Fire Nation,Earth Kingdom" target="_blank" class="text-blue-500">
+					/api/characters?ethnicity=Fire Nation,Earth Kingdom
+				</a>
+				<h3 class="mb-4 mt-4 text-lg">Example Response</h3>
+				<pre>
+									<code class="language-json">
+HTTP 200 OK
+Content-Type: application/json
+[
+{
+	"first_episode":"A Leaf in the Wind",
+	"id":2,
+	"eye_color":"Tangerine",
+	"ethnicity": ["Fire Nation","Earth Kingdom"],
+	"gender":"Man",
+	"image_url":"https://static.wikia.nocookie.net/avatar/images/a/a6/Mako.png/revision/latest?cb=20150408124557",
+	"nationality":["Republic City","United Republic"],
+	"type":"Human",
+	"birthdate":"152 AG",
+	"name":"Mako"
+}
+]
+					</code>
+				</pre>
+			</div>
+		</div>
+	</section>
+	<script src="/javascripts/prism.js"></script>
+	<script src="https://unpkg.com/accordion-js@3.3.4/dist/accordion.min.js"></script>
+	<script>
+		new Accordion('.documentation');
+	</script>
 </body>
-
 </html>
