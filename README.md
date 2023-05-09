@@ -8,7 +8,7 @@ NodeJS, [Express](https://www.npmjs.com/package/express), [Firebase](https://fir
 
 ## Hitting the API
 
-Currently, all endpoints accept only GET requests. Checkout out [The Documentation](korra-express-api.onrender.com/) for more information.
+Currently, all endpoints accept only GET requests. Checkout out [The Documentation](https://korra-api.onrender.com/) for more information.
 
 ## Contributing
 
